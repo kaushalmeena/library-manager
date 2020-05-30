@@ -1,7 +1,25 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * The MIT License
+ *
+ * Copyright 2020 Kaushal.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 package com.example.library;
 
@@ -22,9 +40,9 @@ public class User extends javax.swing.JFrame {
     PreparedStatement p = null;
 
     /**
-     * Creates new form RegisterGUI
+     * Creates new form User
      *
-     * @param params
+     * @param params the command line arguments
      */
     public User(String params[]) {
         action = params[0];
@@ -338,7 +356,14 @@ public class User extends javax.swing.JFrame {
         this.dispose();
         Login.main(new String[]{});
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    
+     /**
+     * Checks validity of email
+     * 
+     * @param email
+     * 
+     * @return Boolean value showing if id is email or not
+     */
     public static boolean isEmailValid(String email) {
         Pattern pat = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$");
         if (email == null) {
@@ -346,7 +371,14 @@ public class User extends javax.swing.JFrame {
         }
         return pat.matcher(email).matches();
     }
-
+    
+     /**
+     * Checks validity of mobile
+     * 
+     * @param mobile
+     * 
+     * @return Boolean value showing if mobile is valid or not
+     */
     public static boolean isMobileValid(String mobile) {
         Pattern pat = Pattern.compile("^[0-9]{10}$");
         if (mobile == null) {
@@ -374,13 +406,6 @@ public class User extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
