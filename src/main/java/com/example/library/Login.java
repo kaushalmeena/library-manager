@@ -23,8 +23,15 @@
  */
 package com.example.library;
 
-import java.sql.*;
-import javax.swing.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -115,14 +122,14 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 164, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 196, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPasswordField1)
@@ -157,37 +164,33 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String username = jTextField1.getText();
         String password = String.valueOf(jPasswordField1.getPassword());
-        String errorMessage = "";
-        int errorCount = 0;
+        ArrayList<String> messages = new ArrayList<>();
 
         if (username.length() < 4 || username.length() > 32) {
-            errorCount++;
-            errorMessage += "- Username must be between 4 to 32 characters.\n";
+            messages.add("- Username must be between 4 to 32 characters.");
         }
         if (password.length() < 4 || password.length() > 32) {
-            errorCount++;
-            errorMessage += "- Password must be between 4 to 32 characters.\n";
+            messages.add("- Password must be between 4 to 32 characters.");
         }
 
-        if (errorCount > 0) {
-            JOptionPane.showMessageDialog(null, errorMessage);
+        if (messages.size() > 0) {
+            JOptionPane.showMessageDialog(null, String.join("\n", messages));
             return;
         }
-        
+
         try {
             c = DriverManager.getConnection("jdbc:sqlite::resource:database/library.db");
 
-            p = c.prepareStatement("select * from user where username = ? and password = ?");
+            p = c.prepareStatement("select * from user where username = ? limit 1");
             p.setString(1, username);
-            p.setString(2, password);
-            q = c.prepareStatement("select count(*) from user where username = ? and password = ?");
-            q.setString(1, username);
-            q.setString(2, password);
 
             r = p.executeQuery();
-            s = q.executeQuery();
 
-            if (s.getInt("count(*)") == 1) {
+            if (r.isBeforeFirst() == false || BCrypt.checkpw(password, r.getString("password")) == false) {
+                JOptionPane.showMessageDialog(null, "Incorrect username or password.", "Failure", JOptionPane.ERROR_MESSAGE);
+                jTextField1.setText("");
+                jPasswordField1.setText("");
+            } else {
                 JOptionPane.showMessageDialog(null, "Successfully logged in.");
                 if (r.getString("type").equals("student")) {
                     StudentDashboard.main(new String[]{r.getString("id"), r.getString("name"), r.getString("email"), r.getString("username"), r.getString("type")});
@@ -199,10 +202,6 @@ public class Login extends javax.swing.JFrame {
                     AdminDashboard.main(new String[]{r.getString("id"), r.getString("name"), r.getString("email"), r.getString("username"), r.getString("type")});
                 }
                 this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Incorrect username or password.", "Failure", JOptionPane.ERROR_MESSAGE);
-                jTextField1.setText("");
-                jPasswordField1.setText("");
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
@@ -248,7 +247,7 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new Login().setVisible(true);
