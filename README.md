@@ -1,6 +1,4 @@
-# Library
-
-# Library
+# Library Manager
 
 A Netbeans project of Java application for library management system which stores data in SQLlite database.
 
