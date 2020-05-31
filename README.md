@@ -1,17 +1,34 @@
-# [Project : Library Management System]
+# Library
 
-## [ Synopsis ]
+# Library
 
 A Netbeans project of Java application for library management system which stores data in SQLlite database.
 
-## [ Prerequisities ]
+## Getting Started
 
-- Netbeans 11
-  - https://netbeans.apache.org/download/index.html
-- Java SE Development Kit 14
+These instructions will get you a copy of the project up and running on your local machine for development purposes.
 
-## [ Usage ]
+### Prerequisites
 
-- Clone the repository.
-- Open Netbeans 8.2 and click on File->Open project.
-- Browse for the repository folder.
+To install this project you need:
+
+- [Netbeans 11+](https://netbeans.apache.org/download/index.html "Netbeans 11+") (alongwith Java SE Development Kit 14)
+- [git](https://git-scm.com/downloads "git") (only to clone this repository)
+
+### Installation
+
+To set up everything in your local machine, you need to follow these steps:
+
+1. Clone this repo onto your computer:
+
+```bash
+$ git clone https://github.com/kaushalmeena/library-manager.git
+```
+
+2. Open Netbeans and click on File->Open project
+
+3. Navigate to `library-manager` folder and press Open Project
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
