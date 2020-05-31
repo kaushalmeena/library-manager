@@ -41,9 +41,9 @@ public class View extends javax.swing.JFrame {
 
     TableRowSorter<TableModel> sorter;
 
-    Connection c = null;
     ResultSet r = null;
     PreparedStatement p = null;
+    Connection c = null;
 
     /**
      * Creates new form View
@@ -315,9 +315,13 @@ public class View extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
-                if (c != null) {
+                if (r != null) {
                     r.close();
+                }
+                if (p != null) {
                     p.close();
+                }
+                if (c != null) {
                     c.close();
                 }
             } catch (SQLException ex) {

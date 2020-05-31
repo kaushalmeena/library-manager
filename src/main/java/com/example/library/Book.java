@@ -41,10 +41,10 @@ public class Book extends javax.swing.JFrame {
 
     String b_id;
     String action;
-
-    Connection c = null;
+    
     ResultSet r = null;
     PreparedStatement p = null;
+    Connection c = null;
     
     /**
      * Creates new form Book
@@ -213,9 +213,13 @@ public class Book extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
-                if (c != null) {
+                if (r != null) {
                     r.close();
+                }
+                if (p != null) {
                     p.close();
+                }
+                if (c != null) {
                     c.close();
                 }
             } catch (SQLException ex) {
@@ -287,9 +291,13 @@ public class Book extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
-                if (c != null) {
+                if (r != null) {
                     r.close();
+                }
+                if (p != null) {
                     p.close();
+                }
+                if (c != null) {
                     c.close();
                 }
             } catch (SQLException ex) {

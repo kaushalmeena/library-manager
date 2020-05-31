@@ -39,11 +39,9 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class Login extends javax.swing.JFrame {
 
-    Connection c = null;
     ResultSet r = null;
-    ResultSet s = null;
     PreparedStatement p = null;
-    PreparedStatement q = null;
+    Connection c = null;
 
     /**
      * Creates new form Login
@@ -207,9 +205,13 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
-                if (c != null) {
+                if (r != null) {
                     r.close();
+                }
+                if (p != null) {
                     p.close();
+                }
+                if (c != null) {
                     c.close();
                 }
             } catch (SQLException ex) {

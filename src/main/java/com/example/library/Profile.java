@@ -40,9 +40,9 @@ public class Profile extends javax.swing.JFrame {
 
     String s_id;
 
-    Connection c = null;
     ResultSet r = null;
     PreparedStatement p = null;
+    Connection c = null;
 
     /**
      * Creates new form Profile
@@ -174,9 +174,13 @@ public class Profile extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
-                if (c != null) {
+                if (r != null) {
                     r.close();
+                }
+                if (p != null) {
                     p.close();
+                }
+                if (c != null) {
                     c.close();
                 }
             } catch (SQLException ex) {
@@ -228,9 +232,13 @@ public class Profile extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
-                if (c != null) {
+                if (r != null) {
                     r.close();
+                }
+                if (p != null) {
                     p.close();
+                }
+                if (c != null) {
                     c.close();
                 }
             } catch (SQLException ex) {

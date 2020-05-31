@@ -43,11 +43,11 @@ public class Operation extends javax.swing.JFrame {
     String action;
     String operation;
 
-    Connection c = null;
     ResultSet r = null;
     ResultSet s = null;
     PreparedStatement p = null;
     PreparedStatement q = null;
+    Connection c = null;
 
     /**
      * Creates new form Operation
@@ -170,11 +170,9 @@ public class Operation extends javax.swing.JFrame {
         if (s_id.equals(u_id) && action.equals("type-u")) {
             messages.add("Can't delete your own user account.");
         }
-
         if (isIdValid(u_id) == false && jTextField1.isVisible()) {
             messages.add("Specified user-id is not valid.");
         }
-
         if (isIdValid(b_id) == false && jTextField2.isVisible()) {
             messages.add("Specified book-id is not valid.");
         }
@@ -293,9 +291,19 @@ public class Operation extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
-                if (c != null) {
+                if (r != null) {
                     r.close();
+                }
+                if (s != null) {
+                    s.close();
+                }
+                if (p != null) {
                     p.close();
+                }
+                if (q != null) {
+                    q.close();
+                }
+                if (c != null) {
                     c.close();
                 }
             } catch (SQLException ex) {
@@ -307,12 +315,12 @@ public class Operation extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+
     /**
      * Checks validity of id
-     * 
+     *
      * @param id
-     * 
+     *
      * @return Boolean value showing if id is valid or not
      */
     public static boolean isIdValid(String id) {
