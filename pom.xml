@@ -22,6 +22,6 @@
         <maven.compiler.source>12</maven.compiler.source>
         <maven.compiler.target>12</maven.compiler.target>
     </properties>
-    <description>A Netbeans project of Java application for library management sustem which stores data in SQLlite database.</description>
+    <description>A Netbeans project of Java application for library management sustem which stores data in SQLite database.</description>
     <name>library-manager</name>
 </project>

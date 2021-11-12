@@ -1,6 +1,6 @@
 # Library Manager
 
-A Netbeans project of Java application for library management system which stores data in SQLlite database.
+A Netbeans project of Java application for library management system which stores data in SQLite database.
 
 ## Getting Started
 
