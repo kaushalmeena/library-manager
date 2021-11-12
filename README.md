@@ -27,6 +27,31 @@ $ git clone https://github.com/kaushalmeena/library-manager.git
 
 3. Navigate to `library-manager` folder and press Open Project
 
+## Screenshots
+
+### Auth Module
+
+<img src="./screenshots/AuthLogin.png" width="600"> 
+<img src="./screenshots/AuthRegister.png" width="600">
+
+### Admin Module
+
+<img src="./screenshots/AdminDashboard.png" width="600">
+<img src="./screenshots/AdminUsers.png" width="600"> 
+<img src="./screenshots/AdminAddUser.png" width="600">
+
+### Librarian Module
+
+<img src="./screenshots/LibrarianDashboard.png" width="600">
+<img src="./screenshots/LibrarianBooks.png" width="600"> 
+<img src="./screenshots/LibrarianAddBook.png" width="600">
+<img src="./screenshots/LibrarianUpdateBook.png" width="600"> 
+<img src="./screenshots/LibrarianIssuedBooks.png" width="600">
+
+### Student Module
+
+<img src="./screenshots/StudentDashboard.png" width="600">
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
