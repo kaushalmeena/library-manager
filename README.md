@@ -2,7 +2,7 @@
 
 A Netbeans project of Java application for library management system which stores data in SQLite database.
 
-## Getting Started
+## Local Development
 
 These instructions will get you a copy of the project up and running on your local machine for development purposes.
 
