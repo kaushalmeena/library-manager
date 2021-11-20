@@ -80,7 +80,8 @@ public class Operation extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Operation");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("User-Id");
@@ -160,7 +161,7 @@ public class Operation extends javax.swing.JFrame {
             jLabel2.setVisible(false);
             jTextField2.setVisible(false);
         }
-        jButton1.setText(operation);
+        jButton1.setText(convertToTitleCase(operation));
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String user_id = jTextField1.getText();
@@ -329,6 +330,17 @@ public class Operation extends javax.swing.JFrame {
             return false;
         }
         return pat.matcher(id).matches();
+    }
+
+    /**
+     * Converts string to title case
+     *
+     * @param text
+     *
+     * @return Converted string value
+     */
+    public static String convertToTitleCase(String text) {
+        return (text.length() > 0) ? text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase() : "";
     }
 
     /**

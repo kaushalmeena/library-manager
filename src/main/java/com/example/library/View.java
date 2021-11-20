@@ -79,8 +79,8 @@ public class View extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Books");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("View");
 
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -331,11 +331,14 @@ public class View extends javax.swing.JFrame {
     }
 
     private void initForm() {
-        if (action.equals("type-u")) {
-            this.setTitle("Users");
-        }
-        if (action.equals("type-i")) {
+        if (action.equals("type-b")) {
+            this.setTitle("Books");
+        } else if (action.equals("type-i")) {
+            this.setTitle("My issued books");
+        } else if (action.equals("type-t")) {
             this.setTitle("Issued books");
+        } else if (action.equals("type-u")) {
+            this.setTitle("Users");
         }
         if (logged_in_type.equals("librarian")) {
             this.jButton2.setEnabled(true);
