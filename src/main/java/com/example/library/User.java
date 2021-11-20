@@ -84,7 +84,7 @@ public class User extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Register");
+        setTitle("User");
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -108,7 +108,7 @@ public class User extends javax.swing.JFrame {
         jLabel7.setText("Confirm");
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Register");
+        jButton1.setText("Create");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -239,23 +239,28 @@ public class User extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initForm() {
-        if (action.equals("type-a")) {
-            this.setTitle("Add user");
-            jButton1.setText("Add");
-            jLabel8.setVisible(false);
-            jButton3.setVisible(false);
-        }
-        if (action.equals("type-s")) {
-            jLabel4.setVisible(false);
-            jComboBox1.setVisible(false);
+        switch (action) {
+            case "create-user":
+                this.setTitle("Create user");
+                jButton1.setText("Create");
+                jLabel8.setVisible(false);
+                jButton3.setVisible(false);
+                break;
+            case "register-user":
+                jButton1.setText("Register");
+                jLabel4.setVisible(false);
+                jComboBox1.setVisible(false);
+                break;
         }
     }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (action.equals("type-s")) {
-            System.exit(0);
-        }
-        if (action.equals("type-a")) {
-            this.dispose();
+        switch (action) {
+            case "create-user":
+                this.dispose();
+                break;
+            case "register-user":
+                System.exit(0);
+                break;
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -269,11 +274,13 @@ public class User extends javax.swing.JFrame {
         ArrayList<String> messages = new ArrayList<>();
         String user_type = "";
 
-        if (action.equals("type-a") == true) {
-            user_type = String.valueOf(jComboBox1.getSelectedItem()).toLowerCase();
-        }
-        if (action.equals("type-a") == true) {
-            user_type = "student";
+        switch (action) {
+            case "create-user":
+                user_type = String.valueOf(jComboBox1.getSelectedItem()).toLowerCase();
+                break;
+            case "register-user":
+                user_type = "student";
+                break;
         }
 
         if (name.length() < 4 || name.length() > 64) {
@@ -314,17 +321,23 @@ public class User extends javax.swing.JFrame {
             p.setString(5, BCrypt.hashpw(password, BCrypt.gensalt()));
             p.setString(6, user_type);
 
-            if (p.executeUpdate() == 1) {
-                if (action.equals("type-a")) {
-                    messages.add("User successfully added.");
-                }
-                if (action.equals("type-s")) {
-                    messages.add("User successfully registered.");
-                }
-                JOptionPane.showMessageDialog(null, String.join("\n", messages));
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Error occured while inserting data.", "Failure", JOptionPane.ERROR_MESSAGE);
+            switch (action) {
+                case "create-user":
+                    if (p.executeUpdate() == 1) {
+                        JOptionPane.showMessageDialog(null, "User successfully created.");
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error occured while creating user.", "Failure", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
+                case "register-user":
+                    if (p.executeUpdate() == 1) {
+                        JOptionPane.showMessageDialog(null, "User successfully registered.");
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error occured while registering user.", "Failure", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
@@ -358,11 +371,11 @@ public class User extends javax.swing.JFrame {
      * @return Boolean value showing if id is email or not
      */
     public static boolean isEmailValid(String email) {
-        Pattern pat = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$");
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$");
         if (email == null) {
             return false;
         }
-        return pat.matcher(email).matches();
+        return pattern.matcher(email).matches();
     }
 
     /**
@@ -373,11 +386,11 @@ public class User extends javax.swing.JFrame {
      * @return Boolean value showing if mobile is valid or not
      */
     public static boolean isMobileValid(String mobile) {
-        Pattern pat = Pattern.compile("^[0-9]{10}$");
+        Pattern pattern = Pattern.compile("^[0-9]{10}$");
         if (mobile == null) {
             return false;
         }
-        return pat.matcher(mobile).matches();
+        return pattern.matcher(mobile).matches();
     }
 
     /**

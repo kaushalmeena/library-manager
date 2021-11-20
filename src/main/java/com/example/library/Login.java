@@ -190,14 +190,16 @@ public class Login extends javax.swing.JFrame {
                 jPasswordField1.setText("");
             } else {
                 JOptionPane.showMessageDialog(null, "Successfully logged in.");
-                if (r.getString("type").equals("student")) {
-                    StudentDashboard.main(new String[]{r.getString("id"), r.getString("name"), r.getString("email"), r.getString("username"), r.getString("type")});
-                }
-                if (r.getString("type").equals("librarian")) {
-                    LibrarianDashboard.main(new String[]{r.getString("id"), r.getString("name"), r.getString("email"), r.getString("username"), r.getString("type")});
-                }
-                if (r.getString("type").equals("admin")) {
-                    AdminDashboard.main(new String[]{r.getString("id"), r.getString("name"), r.getString("email"), r.getString("username"), r.getString("type")});
+                switch (r.getString("type")) {
+                    case "admin":
+                        AdminDashboard.main(new String[]{r.getString("id"), r.getString("name"), r.getString("email"), r.getString("username"), r.getString("type")});
+                        break;
+                    case "librarian":
+                        LibrarianDashboard.main(new String[]{r.getString("id"), r.getString("name"), r.getString("email"), r.getString("username"), r.getString("type")});
+                        break;
+                    case "student":
+                        StudentDashboard.main(new String[]{r.getString("id"), r.getString("name"), r.getString("email"), r.getString("username"), r.getString("type")});
+                        break;
                 }
                 this.dispose();
             }
@@ -226,7 +228,7 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.dispose();
-        User.main(new String[]{"type-s"});
+        User.main(new String[]{"register-user"});
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

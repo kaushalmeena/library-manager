@@ -31,11 +31,11 @@ import javax.swing.UIManager;
  */
 public class AdminDashboard extends javax.swing.JFrame {
 
-    String logged_in_id;
-    String logged_in_name;
-    String logged_in_email;
-    String logged_in_username;
-    String logged_in_type;
+    String currentUserId;
+    String currentName;
+    String currentEmail;
+    String currentUsername;
+    String currentUserType;
 
     /**
      * Creates new form AdminDashboard
@@ -43,11 +43,11 @@ public class AdminDashboard extends javax.swing.JFrame {
      * @param params the command line arguments
      */
     public AdminDashboard(String params[]) {
-        logged_in_id = params[0];
-        logged_in_name = params[1];
-        logged_in_email = params[2];
-        logged_in_username = params[3];
-        logged_in_type = params[4];
+        currentUserId = params[0];
+        currentName = params[1];
+        currentEmail = params[2];
+        currentUsername = params[3];
+        currentUserType = params[4];
         initComponents();
     }
 
@@ -68,7 +68,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Dashboard");
+        setTitle("AdminDashboard");
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("Admin");
@@ -91,7 +91,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
 
         jButton5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton5.setText("Add user");
+        jButton5.setText("Create user");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -173,19 +173,19 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        View.main(new String[]{logged_in_id, "type-u", logged_in_type});
+        View.main(new String[]{currentUserId, currentUserType, "view-users"});
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        User.main(new String[]{"type-a"});
+        User.main(new String[]{"create-user"});
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        Operation.main(new String[]{logged_in_id, "", "type-u", "delete"});
+        Operation.main(new String[]{currentUserId, "delete-user"});
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Profile.main(new String[]{logged_in_id});
+        Profile.main(new String[]{currentUserId});
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed

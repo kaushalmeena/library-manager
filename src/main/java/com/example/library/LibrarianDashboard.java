@@ -31,11 +31,11 @@ import javax.swing.UIManager;
  */
 public class LibrarianDashboard extends javax.swing.JFrame {
 
-    String logged_in_id;
-    String logged_in_name;
-    String logged_in_email;
-    String logged_in_username;
-    String logged_in_type;
+    String currentUserId;
+    String currentName;
+    String currentEmail;
+    String currentUsername;
+    String currentUserType;
 
     /**
      * Creates new form LibrarianDashboard
@@ -43,11 +43,11 @@ public class LibrarianDashboard extends javax.swing.JFrame {
      * @param params the command line arguments
      */
     public LibrarianDashboard(String params[]) {
-        logged_in_id = params[0];
-        logged_in_name = params[1];
-        logged_in_email = params[2];
-        logged_in_username = params[3];
-        logged_in_type = params[4];
+        currentUserId = params[0];
+        currentName = params[1];
+        currentEmail = params[2];
+        currentUsername = params[3];
+        currentUserType = params[4];
         initComponents();
     }
 
@@ -71,7 +71,7 @@ public class LibrarianDashboard extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Dashboard");
+        setTitle("LibrarianDashboard");
         setSize(new java.awt.Dimension(500, 230));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -143,7 +143,7 @@ public class LibrarianDashboard extends javax.swing.JFrame {
         });
 
         jButton5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton5.setText("Add book");
+        jButton5.setText("Create book");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -208,11 +208,11 @@ public class LibrarianDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        View.main(new String[]{logged_in_id, "type-b", "librarian"});
+        View.main(new String[]{currentUserId, currentUserType, "view-books",});
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        Operation.main(new String[]{logged_in_id, "", "type-b", "issue"});
+        Operation.main(new String[]{currentUserId, "issue-book"});
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
@@ -220,23 +220,23 @@ public class LibrarianDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Profile.main(new String[]{logged_in_id});
+        Profile.main(new String[]{currentUserId});
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        Operation.main(new String[]{logged_in_id, "", "type-b", "update"});
+        Operation.main(new String[]{currentUserId, "update-book"});
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        Operation.main(new String[]{logged_in_id, "", "type-b", "return"});
+        Operation.main(new String[]{currentUserId, "return-book"});
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        View.main(new String[]{logged_in_id, "type-t", "librarian"});
+        View.main(new String[]{currentUserId, currentUserType, "view-issued-books"});
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Book.main(new String[]{"", "type-a"});
+        Book.main(new String[]{"create-book"});
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**

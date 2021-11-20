@@ -38,7 +38,7 @@ import javax.swing.JOptionPane;
  */
 public class Profile extends javax.swing.JFrame {
 
-    String logged_in_id;
+    String currentUserId;
 
     ResultSet r = null;
     PreparedStatement p = null;
@@ -50,7 +50,7 @@ public class Profile extends javax.swing.JFrame {
      * @param params the command line arguments
      */
     public Profile(String params[]) {
-        logged_in_id = params[0];
+        currentUserId = params[0];
         initComponents();
         initForm();
     }
@@ -163,7 +163,7 @@ public class Profile extends javax.swing.JFrame {
             c = DriverManager.getConnection("jdbc:sqlite::resource:database/library.db");
 
             p = c.prepareStatement("select * from user where id = ?");
-            p.setString(1, logged_in_id);
+            p.setString(1, currentUserId);
 
             r = p.executeQuery();
 
@@ -220,13 +220,13 @@ public class Profile extends javax.swing.JFrame {
             p.setString(1, name);
             p.setString(2, email);
             p.setString(3, mobile);
-            p.setString(4, logged_in_id);
+            p.setString(4, currentUserId);
 
             if (p.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Profile successfully updated.");
                 this.dispose();
             } else {
-                JOptionPane.showMessageDialog(null, "Error occured while updating data.", "Failure", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error occured while updating profile.", "Failure", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
@@ -260,11 +260,11 @@ public class Profile extends javax.swing.JFrame {
      */
     public static boolean isEmailValid(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        Pattern pat = Pattern.compile(emailRegex);
+        Pattern pattern = Pattern.compile(emailRegex);
         if (email == null) {
             return false;
         }
-        return pat.matcher(email).matches();
+        return pattern.matcher(email).matches();
     }
 
     /**
@@ -276,11 +276,11 @@ public class Profile extends javax.swing.JFrame {
      */
     public static boolean isMobileValid(String mobile) {
         String mobileRegex = "^[0-9]{10}$";
-        Pattern pat = Pattern.compile(mobileRegex);
+        Pattern pattern = Pattern.compile(mobileRegex);
         if (mobile == null) {
             return false;
         }
-        return pat.matcher(mobile).matches();
+        return pattern.matcher(mobile).matches();
     }
 
     /**

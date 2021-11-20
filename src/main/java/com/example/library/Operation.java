@@ -39,9 +39,8 @@ import javax.swing.UIManager;
  */
 public class Operation extends javax.swing.JFrame {
 
-    String logged_in_id;
+    String currentUserId;
     String action;
-    String operation;
 
     ResultSet r = null;
     ResultSet s = null;
@@ -55,14 +54,25 @@ public class Operation extends javax.swing.JFrame {
      * @param params the command line arguments
      */
     public Operation(String params[]) {
-        logged_in_id = params[0];
-        action = params[2];
-        operation = params[3];
+        currentUserId = params[0];
+        action = params[1];
+        switch (action) {
+            case "user-delete":
+                if (params.length > 2 && params[2].length() > 0) {
+                    jTextField1.setText(params[1]);
+                }
+                break;
+            case "book-issue":
+            case "book-return":
+            case "book-update":
+            case "book-delete":
+                if (params.length > 2 && params[2].length() > 0) {
+                    jTextField2.setText(params[1]);
+                }
+                break;
+        }
         initComponents();
         initForm();
-        if (params[1].length() > 0) {
-            jTextField2.setText(params[1]);
-        }
     }
 
     /**
@@ -153,22 +163,37 @@ public class Operation extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initForm() {
-        if (action.equals("type-b") && !(operation.equals("issue") || operation.equals("return"))) {
-            jLabel1.setVisible(false);
-            jTextField1.setVisible(false);
+        switch (action) {
+            case "user-delete":
+                jButton1.setText("Delete");
+                jLabel2.setVisible(false);
+                jTextField2.setVisible(false);
+                break;
+            case "book-issue":
+                jButton1.setText("Issue");
+                break;
+            case "book-return":
+                jButton1.setText("Return");
+                break;
+            case "book-update":
+                jButton1.setText("Update");
+                jLabel1.setVisible(false);
+                jTextField1.setVisible(false);
+                break;
+            case "book-delete":
+                jButton1.setText("Delete");
+                jLabel1.setVisible(false);
+                jTextField1.setVisible(false);
+                break;
         }
-        if (action.equals("type-u") && !(operation.equals("issue") || operation.equals("return"))) {
-            jLabel2.setVisible(false);
-            jTextField2.setVisible(false);
-        }
-        jButton1.setText(convertToTitleCase(operation));
     }
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String user_id = jTextField1.getText();
         String book_id = jTextField2.getText();
         ArrayList<String> messages = new ArrayList<>();
 
-        if (logged_in_id.equals(user_id) && action.equals("type-u")) {
+        if (currentUserId.equals(user_id) && action.equals("user-delete")) {
             messages.add("Can't delete your own user account.");
         }
         if (isIdValid(user_id) == false && jTextField1.isVisible()) {
@@ -183,110 +208,131 @@ public class Operation extends javax.swing.JFrame {
             return;
         }
 
+        if (action.equals("book-update")) {
+            Book.main(new String[]{"update-book", book_id});
+            this.dispose();
+            return;
+        }
+
         try {
             c = DriverManager.getConnection("jdbc:sqlite::resource:database/library.db");
 
-            if (action.equals("type-u")) {
-                p = c.prepareStatement("select * from user where id = ?");
-                p.setString(1, user_id);
-            }
-            if (action.equals("type-b")) {
-                p = c.prepareStatement("select * from book where id = ?");
-                p.setString(1, book_id);
+            switch (action) {
+                case "user-delete":
+                    p = c.prepareStatement("select * from user where id = ?");
+                    p.setString(1, user_id);
+                    break;
+                case "book-issue":
+                case "book-return":
+                case "book-delete":
+                    p = c.prepareStatement("select * from book where id = ?");
+                    p.setString(1, book_id);
+                    break;
             }
 
             r = p.executeQuery();
 
-            if (r.isBeforeFirst()) {
-                if (operation.equals("update")) {
-                    Book.main(new String[]{book_id, "type-c"});
-                    this.dispose();
-                } else {
-                    if (operation.equals("delete")) {
-                        if (action.equals("type-u")) {
-                            messages.add("Do you really want to delete the user " + r.getString("name") + "?");
-                        }
-                        if (action.equals("type-b")) {
-                            messages.add("Do you really want to delete the book " + r.getString("name") + " by " + r.getString("author") + "?");
-                        }
-                    }
-                    if (operation.equals("issue")) {
-                        q = c.prepareStatement("select count(*) as issued from issue where book_id = ?");
-                        q.setString(1, book_id);
-
-                        s = q.executeQuery();
-
-                        if (r.getInt("quantity") - s.getInt("issued") > 0) {
-                            messages.add("Book " + r.getString("name") + " by " + r.getString("author") + " will be issued on behalf of specified user. Do you want to continue?");
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Specified book is not available.");
-                            this.dispose();
-                        }
-                    }
-                    if (operation.equals("return")) {
-                        messages.add("Book " + r.getString("name") + " by " + r.getString("author") + " will be returned on behalf of specified user. Do you want to continue?");
-                    }
-
-                    if (JOptionPane.showConfirmDialog(null, String.join("\n", messages), "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                        if (operation.equals("delete")) {
-                            if (action.equals("type-u")) {
-                                p = c.prepareStatement("delete from user where id = ?");
-                                p.setString(1, user_id);
-                            }
-                            if (action.equals("type-b")) {
-                                p = c.prepareStatement("delete from book where id = ?");
-                                p.setString(1, book_id);
-                            }
-
-                            if (p.executeUpdate() == 1) {
-                                if (action.equals("type-u")) {
-                                    messages.add("User successfully deleted.");
-                                }
-                                if (action.equals("type-b")) {
-                                    messages.add("Book successfully deleted.");
-                                }
-                                JOptionPane.showMessageDialog(null, String.join("\n", messages));
-                                this.dispose();
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Error occured while deleting data.", "Failure", JOptionPane.ERROR_MESSAGE);
-                            }
-                        }
-                        if (operation.equals("issue")) {
-                            p = c.prepareStatement("insert into issue (book_id, user_id) values (?, ?)");
-                            p.setString(1, book_id);
-                            p.setString(2, user_id);
-
-                            if (p.executeUpdate() == 1) {
-                                JOptionPane.showMessageDialog(null, "Book successfully issued.");
-                                this.dispose();
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Error occured while inserting data.", "Failure", JOptionPane.ERROR_MESSAGE);
-                            }
-                        }
-                        if (operation.equals("return")) {
-                            p = c.prepareStatement("delete from issue where book_id = ? and user_id = ?");
-                            p.setString(1, book_id);
-                            p.setString(2, user_id);
-
-                            if (p.executeUpdate() == 1) {
-                                JOptionPane.showMessageDialog(null, "Book successfully returned.");
-                                this.dispose();
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Error occured while deleting data.", "Failure", JOptionPane.ERROR_MESSAGE);
-                            }
-                        }
-                    } else {
-                        this.dispose();
-                    }
-                }
-            } else {
-                if (action.equals("type-u")) {
-                    messages.add("Specified user-id is not found database.");
-                }
-                if (action.equals("type-b")) {
-                    messages.add("Specified book-id is not found database.");
+            if (!r.isBeforeFirst()) {
+                switch (action) {
+                    case "user-delete":
+                        messages.add("Specified user-id was not found in database.");
+                        break;
+                    case "book-issue":
+                    case "book-return":
+                    case "book-delete":
+                        messages.add("Specified book-id was not found in database.");
+                        break;
                 }
                 JOptionPane.showMessageDialog(null, String.join("\n", messages), "Failure", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            switch (action) {
+                case "user-delete":
+                    messages.add("Do you really want to delete the user " + r.getString("name") + "?");
+                    break;
+                case "book-issue":
+                    q = c.prepareStatement("select count(*) as issued from issue where book_id = ?");
+                    q.setString(1, book_id);
+
+                    s = q.executeQuery();
+
+                    if (r.getInt("quantity") - s.getInt("issued") > 0) {
+                        messages.add("Book " + r.getString("name") + " by " + r.getString("author") + " will be issued on behalf of specified user. Do you want to continue?");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Specified book is not available for issuing.");
+                        return;
+                    }
+                    break;
+                case "book-return":
+                    q = c.prepareStatement("select * from issue where book_id = ? and user_id = ?");
+                    q.setString(1, book_id);
+                    q.setString(2, user_id);
+
+                    s = q.executeQuery();
+
+                    if (s.isBeforeFirst()) {
+                        messages.add("Book " + r.getString("name") + " by " + r.getString("author") + " will be returned on behalf of specified user. Do you want to continue?");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Specified book can't be returned and it is not issued yet.");
+                        return;
+                    }
+                case "book-delete":
+                    messages.add("Do you really want to delete the book " + r.getString("name") + " by " + r.getString("author") + "?");
+                    break;
+            }
+
+            if (JOptionPane.showConfirmDialog(null, String.join("\n", messages), "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+                return;
+            }
+
+            switch (action) {
+                case "user-delete":
+                    p = c.prepareStatement("delete from user where id = ?");
+                    p.setString(1, user_id);
+
+                    if (p.executeUpdate() == 1) {
+                        JOptionPane.showMessageDialog(null, "User successfully deleted.");
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error occured while deleting user.", "Failure", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
+                case "book-issue":
+                    p = c.prepareStatement("insert into issue (book_id, user_id) values (?, ?)");
+                    p.setString(1, book_id);
+                    p.setString(2, user_id);
+
+                    if (p.executeUpdate() == 1) {
+                        JOptionPane.showMessageDialog(null, "Book successfully issued.");
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error occured while issuing book.", "Failure", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
+                case "book-return":
+                    p = c.prepareStatement("delete from issue where book_id = ? and user_id = ?");
+                    p.setString(1, book_id);
+                    p.setString(2, user_id);
+
+                    if (p.executeUpdate() == 1) {
+                        JOptionPane.showMessageDialog(null, "Book successfully returned.");
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error occured while returning book.", "Failure", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
+                case "book-delete":
+                    p = c.prepareStatement("delete from book where id = ?");
+                    p.setString(1, book_id);
+
+                    if (p.executeUpdate() == 1) {
+                        JOptionPane.showMessageDialog(null, "Book successfully deleted.");
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error occured while deleting book.", "Failure", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
@@ -325,22 +371,11 @@ public class Operation extends javax.swing.JFrame {
      * @return Boolean value showing if id is valid or not
      */
     public static boolean isIdValid(String id) {
-        Pattern pat = Pattern.compile("\\d+");
+        Pattern pattern = Pattern.compile("\\d+");
         if (id == null) {
             return false;
         }
-        return pat.matcher(id).matches();
-    }
-
-    /**
-     * Converts string to title case
-     *
-     * @param text
-     *
-     * @return Converted string value
-     */
-    public static String convertToTitleCase(String text) {
-        return (text.length() > 0) ? text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase() : "";
+        return pattern.matcher(id).matches();
     }
 
     /**
@@ -350,7 +385,7 @@ public class Operation extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

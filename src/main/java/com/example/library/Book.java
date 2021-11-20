@@ -52,13 +52,16 @@ public class Book extends javax.swing.JFrame {
      * @param params the command line arguments
      */
     public Book(String params[]) {
-        book_id = params[0];
-        action = params[1];
-        initComponents();
-        if (action.equals("type-c")) {
-            jButton1.setText("Update");
-            initForm();
+        action = params[0];
+        switch (action) {
+            case "update-book":
+                if (params.length > 1 && params[1].length() > 0) {
+                    book_id = params[1];
+                }
+                break;
         }
+        initComponents();
+        initForm();
     }
 
     /**
@@ -83,7 +86,7 @@ public class Book extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Add book");
+        setTitle("Book");
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -111,7 +114,7 @@ public class Book extends javax.swing.JFrame {
         jTextField5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Add");
+        jButton1.setText("Create");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -194,37 +197,52 @@ public class Book extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initForm() {
-        this.setTitle("Update book");
+        switch (action) {
+            case "create-book":
+                jButton1.setText("Create");
+                this.setTitle("Create book");
+                break;
+            case "update-book":
+                jButton1.setText("Update");
+                this.setTitle("Update book");
 
-        try {
-            c = DriverManager.getConnection("jdbc:sqlite::resource:database/library.db");
+                try {
+                    c = DriverManager.getConnection("jdbc:sqlite::resource:database/library.db");
 
-            p = c.prepareStatement("select * from book where id = ?");
-            p.setString(1, book_id);
+                    p = c.prepareStatement("select * from book where id = ?");
+                    p.setString(1, book_id);
 
-            r = p.executeQuery();
+                    r = p.executeQuery();
 
-            jTextField1.setText(r.getString("name"));
-            jTextField2.setText(r.getString("author"));
-            jTextField3.setText(r.getString("publisher"));
-            jTextField4.setText(r.getString("price"));
-            jTextField5.setText(r.getString("quantity"));
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            try {
-                if (r != null) {
-                    r.close();
+                    if (!r.isBeforeFirst()) {
+                        JOptionPane.showMessageDialog(null, "Specified book was not found in database.", "Failure", JOptionPane.ERROR_MESSAGE);
+                        this.dispose();
+                        return;
+                    }
+
+                    jTextField1.setText(r.getString("name"));
+                    jTextField2.setText(r.getString("author"));
+                    jTextField3.setText(r.getString("publisher"));
+                    jTextField4.setText(r.getString("price"));
+                    jTextField5.setText(r.getString("quantity"));
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    try {
+                        if (r != null) {
+                            r.close();
+                        }
+                        if (p != null) {
+                            p.close();
+                        }
+                        if (c != null) {
+                            c.close();
+                        }
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
-                if (p != null) {
-                    p.close();
-                }
-                if (c != null) {
-                    c.close();
-                }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
-            }
+                break;
         }
     }
 
@@ -260,12 +278,14 @@ public class Book extends javax.swing.JFrame {
         try {
             c = DriverManager.getConnection("jdbc:sqlite::resource:database/library.db");
 
-            if (action.equals("type-c")) {
-                p = c.prepareStatement("update book set name = ?, author = ?, publisher = ?, price = ?, quantity = ? where id = ?");
-                p.setString(6, book_id);
-            }
-            if (action.equals("type-a")) {
-                p = c.prepareStatement("insert into book (name, author, publisher, price, quantity) values (?, ?, ?, ?, ?)");
+            switch (action) {
+                case "create-book":
+                    p = c.prepareStatement("insert into book (name, author, publisher, price, quantity) values (?, ?, ?, ?, ?)");
+                    break;
+                case "update-book":
+                    p = c.prepareStatement("update book set name = ?, author = ?, publisher = ?, price = ?, quantity = ? where id = ?");
+                    p.setString(6, book_id);
+                    break;
             }
 
             p.setString(1, name);
@@ -274,18 +294,21 @@ public class Book extends javax.swing.JFrame {
             p.setString(4, price);
             p.setString(5, quantity);
 
-            if (p.executeUpdate() == 1) {
-                if (action.equals("type-c")) {
-                    messages.add("Book successfully updated.");
-                    this.dispose();
-                }
-                if (action.equals("type-a")) {
-                    messages.add("Book successfully added.");
-                }
-                JOptionPane.showMessageDialog(null, String.join("\n", messages));
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Error occured while updating data.", "Failure", JOptionPane.ERROR_MESSAGE);
+            switch (action) {
+                case "create-book":
+                    if (p.executeUpdate() == 1) {
+                        JOptionPane.showMessageDialog(null, "Book successfully created.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error occured while creating book.", "Failure", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
+                case "update-book":
+                    if (p.executeUpdate() == 1) {
+                        JOptionPane.showMessageDialog(null, "Book successfully updated.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error occured while updating book.", "Failure", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
@@ -318,11 +341,11 @@ public class Book extends javax.swing.JFrame {
      * @return Boolean value showing if price is valid or not
      */
     public static boolean isPriceValid(String price) {
-        Pattern pat = Pattern.compile("^\\d+(\\.\\d{1,2})?$");
+        Pattern pattern = Pattern.compile("^\\d+(\\.\\d{1,2})?$");
         if (price == null) {
             return false;
         }
-        return pat.matcher(price).matches();
+        return pattern.matcher(price).matches();
     }
 
     /**
@@ -333,11 +356,11 @@ public class Book extends javax.swing.JFrame {
      * @return Boolean value showing if id is quantity or not
      */
     public static boolean isQuantityValid(String quantity) {
-        Pattern pat = Pattern.compile("\\d+");
+        Pattern pattern = Pattern.compile("\\d+");
         if (quantity == null) {
             return false;
         }
-        return pat.matcher(quantity).matches();
+        return pattern.matcher(quantity).matches();
     }
 
     /**
@@ -347,7 +370,7 @@ public class Book extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
