@@ -32,8 +32,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jButton4" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="jButton1" min="-2" pref="146" max="-2" attributes="0"/>
-                      <EmptySpace pref="36" max="32767" attributes="0"/>
+                      <Component id="jButton1" min="-2" pref="145" max="-2" attributes="0"/>
+                      <EmptySpace pref="37" max="32767" attributes="0"/>
                       <Component id="jButton2" min="-2" pref="105" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton3" min="-2" pref="105" max="-2" attributes="0"/>
@@ -62,7 +62,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButton5" min="-2" pref="50" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="32767" attributes="0"/>
-              <Component id="jButton6" min="-2" pref="34" max="-2" attributes="0"/>
+              <Component id="jButton6" min="-2" pref="35" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -77,6 +77,9 @@
         <Property name="text" type="java.lang.String" value="Student"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
