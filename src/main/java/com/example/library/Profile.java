@@ -38,7 +38,7 @@ import javax.swing.JOptionPane;
  */
 public class Profile extends javax.swing.JFrame {
 
-    String s_id;
+    String logged_in_id;
 
     ResultSet r = null;
     PreparedStatement p = null;
@@ -50,7 +50,7 @@ public class Profile extends javax.swing.JFrame {
      * @param params the command line arguments
      */
     public Profile(String params[]) {
-        s_id = params[0];
+        logged_in_id = params[0];
         initComponents();
         initForm();
     }
@@ -92,7 +92,7 @@ public class Profile extends javax.swing.JFrame {
         jLabel7.setVerifyInputWhenFocusTarget(false);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Update");
+        jButton1.setText("update");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -163,7 +163,7 @@ public class Profile extends javax.swing.JFrame {
             c = DriverManager.getConnection("jdbc:sqlite::resource:database/library.db");
 
             p = c.prepareStatement("select * from user where id = ?");
-            p.setString(1, s_id);
+            p.setString(1, logged_in_id);
 
             r = p.executeQuery();
 
@@ -220,7 +220,7 @@ public class Profile extends javax.swing.JFrame {
             p.setString(1, name);
             p.setString(2, email);
             p.setString(3, mobile);
-            p.setString(4, s_id);
+            p.setString(4, logged_in_id);
 
             if (p.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Profile successfully updated.");
@@ -250,12 +250,12 @@ public class Profile extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+
     /**
      * Checks validity of email
      *
      * @param email
-     * 
+     *
      * @return Boolean value showing if email is valid or not
      */
     public static boolean isEmailValid(String email) {
@@ -266,12 +266,12 @@ public class Profile extends javax.swing.JFrame {
         }
         return pat.matcher(email).matches();
     }
-    
+
     /**
      * Checks validity of mobile
      *
      * @param mobile
-     * 
+     *
      * @return Boolean value showing if id is valid or not
      */
     public static boolean isMobileValid(String mobile) {

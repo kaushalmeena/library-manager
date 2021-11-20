@@ -31,11 +31,11 @@ import javax.swing.UIManager;
  */
 public class LibrarianDashboard extends javax.swing.JFrame {
 
-    String s_id;
-    String s_name;
-    String s_email;
-    String s_username;
-    String s_mode;
+    String logged_in_id;
+    String logged_in_name;
+    String logged_in_email;
+    String logged_in_username;
+    String logged_in_type;
 
     /**
      * Creates new form LibrarianDashboard
@@ -43,11 +43,11 @@ public class LibrarianDashboard extends javax.swing.JFrame {
      * @param params the command line arguments
      */
     public LibrarianDashboard(String params[]) {
-        s_id = params[0];
-        s_name = params[1];
-        s_email = params[2];
-        s_username = params[3];
-        s_mode = params[4];
+        logged_in_id = params[0];
+        logged_in_name = params[1];
+        logged_in_email = params[2];
+        logged_in_username = params[3];
+        logged_in_type = params[4];
         initComponents();
     }
 
@@ -208,11 +208,11 @@ public class LibrarianDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        View.main(new String[]{s_id, "type-b", "librarian"});
+        View.main(new String[]{logged_in_id, "type-b", "librarian"});
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        Operation.main(new String[]{s_id, "", "type-b", "Issue"});
+        Operation.main(new String[]{logged_in_id, "", "type-b", "issue"});
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
@@ -220,19 +220,19 @@ public class LibrarianDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Profile.main(new String[]{s_id});
+        Profile.main(new String[]{logged_in_id});
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        Operation.main(new String[]{s_id, "", "type-b", "Update"});
+        Operation.main(new String[]{logged_in_id, "", "type-b", "update"});
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        Operation.main(new String[]{s_id, "", "type-b", "Return"});
+        Operation.main(new String[]{logged_in_id, "", "type-b", "return"});
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        View.main(new String[]{s_id, "type-t", "librarian"});
+        View.main(new String[]{logged_in_id, "type-t", "librarian"});
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -259,7 +259,7 @@ public class LibrarianDashboard extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(LibrarianDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new LibrarianDashboard(args).setVisible(true);

@@ -34,10 +34,10 @@ import javax.swing.table.*;
  */
 public class View extends javax.swing.JFrame {
 
-    String s_id;
-    String s_mode;
+    String logged_in_id;
+    String logged_in_type;
     String action;
-    String r_id;
+    String row_id;
 
     TableRowSorter<TableModel> sorter;
 
@@ -51,9 +51,9 @@ public class View extends javax.swing.JFrame {
      * @param params the command line arguments
      */
     public View(String params[]) {
-        s_id = params[0];
+        logged_in_id = params[0];
         action = params[1];
-        s_mode = params[2];
+        logged_in_type = params[2];
         initComponents();
         initTable();
         initForm();
@@ -226,15 +226,15 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Operation.main(new String[]{s_id, r_id, "type-b", "Issue"});
+        Operation.main(new String[]{logged_in_id, row_id, "type-b", "issue"});
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         if (action.equals("type-u")) {
-            Operation.main(new String[]{s_id, r_id, "type-u", "Delete"});
+            Operation.main(new String[]{logged_in_id, row_id, "type-u", "delete"});
         }
         if (action.equals("type-b")) {
-            Operation.main(new String[]{s_id, r_id, "type-b", "Delete"});
+            Operation.main(new String[]{logged_in_id, row_id, "type-b", "delete"});
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -248,32 +248,32 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Book.main(new String[]{r_id, "type-c"});
+        Book.main(new String[]{row_id, "type-c"});
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        Operation.main(new String[]{s_id, r_id, "type-b", "Return"});
+        Operation.main(new String[]{logged_in_id, row_id, "type-b", "return"});
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jTable1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable1FocusGained
-        int row_id = jTable1.getSelectedRow();
+        int selected_row_id = jTable1.getSelectedRow();
 
-        if (row_id != -1) {
-            r_id = jTable1.getValueAt(row_id, 0).toString();
-            if (s_mode.equals("admin")) {
+        if (selected_row_id != -1) {
+            row_id = jTable1.getValueAt(selected_row_id, 0).toString();
+            if (logged_in_type.equals("admin")) {
                 jButton4.setEnabled(true);
             }
-            if (s_mode.equals("librarian")) {
+            if (logged_in_type.equals("librarian")) {
                 jButton3.setEnabled(true);
                 jButton4.setEnabled(true);
                 jButton5.setEnabled(true);
                 jButton6.setEnabled(true);
             }
         } else {
-            if (s_mode.equals("admin")) {
+            if (logged_in_type.equals("admin")) {
                 jButton4.setEnabled(false);
             }
-            if (s_mode.equals("librarian")) {
+            if (logged_in_type.equals("librarian")) {
                 jButton3.setEnabled(false);
                 jButton4.setEnabled(false);
                 jButton5.setEnabled(false);
@@ -298,7 +298,7 @@ public class View extends javax.swing.JFrame {
             }
             if (action.equals("type-i")) {
                 p = c.prepareStatement("select issue.id, book.id as book_id, user.id as user_id, book.name as book_name, book.author as book_author, user.name, user.email, issue.issue_date from issue join user on user.id = issue.user_id join book on book.id = issue.user_id where issue.user_id = ?");
-                p.setString(1, s_id);
+                p.setString(1, logged_in_id);
             }
             if (action.equals("type-t")) {
                 p = c.prepareStatement("select issue.id, book.id as book_id, user.id as user_id, book.name as book_name, book.author as book_author, user.name, user.email, issue.issue_date from issue join user on user.id = issue.user_id join book on book.id = issue.user_id");
@@ -337,18 +337,18 @@ public class View extends javax.swing.JFrame {
         if (action.equals("type-i")) {
             this.setTitle("Issued books");
         }
-        if (s_mode.equals("librarian")) {
+        if (logged_in_type.equals("librarian")) {
             this.jButton2.setEnabled(true);
         }
     }
-    
+
     /**
      * Creates model of jTable
      *
      * @param rs
-     * 
+     *
      * @throws SQLException
-     * 
+     *
      * @return Instance of DefaultTableModel class
      */
     public static DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {

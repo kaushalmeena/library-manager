@@ -33,7 +33,6 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import org.mindrot.jbcrypt.BCrypt;
 
-
 /**
  *
  * @author Kaushal
@@ -268,13 +267,13 @@ public class User extends javax.swing.JFrame {
         String password = String.valueOf(jPasswordField1.getPassword());
         String confirm = String.valueOf(jPasswordField2.getPassword());
         ArrayList<String> messages = new ArrayList<>();
-        String u_type = "";
+        String user_type = "";
 
         if (action.equals("type-a") == true) {
-            u_type = String.valueOf(jComboBox1.getSelectedItem()).toLowerCase();
+            user_type = String.valueOf(jComboBox1.getSelectedItem()).toLowerCase();
         }
         if (action.equals("type-a") == true) {
-            u_type = "student";
+            user_type = "student";
         }
 
         if (name.length() < 4 || name.length() > 64) {
@@ -313,7 +312,7 @@ public class User extends javax.swing.JFrame {
             p.setString(3, mobile);
             p.setString(4, username);
             p.setString(5, BCrypt.hashpw(password, BCrypt.gensalt()));
-            p.setString(6, u_type);
+            p.setString(6, user_type);
 
             if (p.executeUpdate() == 1) {
                 if (action.equals("type-a")) {
@@ -350,12 +349,12 @@ public class User extends javax.swing.JFrame {
         this.dispose();
         Login.main(new String[]{});
     }//GEN-LAST:event_jButton3ActionPerformed
-    
-     /**
+
+    /**
      * Checks validity of email
-     * 
+     *
      * @param email
-     * 
+     *
      * @return Boolean value showing if id is email or not
      */
     public static boolean isEmailValid(String email) {
@@ -365,12 +364,12 @@ public class User extends javax.swing.JFrame {
         }
         return pat.matcher(email).matches();
     }
-    
-     /**
+
+    /**
      * Checks validity of mobile
-     * 
+     *
      * @param mobile
-     * 
+     *
      * @return Boolean value showing if mobile is valid or not
      */
     public static boolean isMobileValid(String mobile) {

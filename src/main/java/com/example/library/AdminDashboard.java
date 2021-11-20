@@ -31,11 +31,11 @@ import javax.swing.UIManager;
  */
 public class AdminDashboard extends javax.swing.JFrame {
 
-    String s_id;
-    String s_name;
-    String s_email;
-    String s_username;
-    String s_mode;
+    String logged_in_id;
+    String logged_in_name;
+    String logged_in_email;
+    String logged_in_username;
+    String logged_in_type;
 
     /**
      * Creates new form AdminDashboard
@@ -43,11 +43,11 @@ public class AdminDashboard extends javax.swing.JFrame {
      * @param params the command line arguments
      */
     public AdminDashboard(String params[]) {
-        s_id = params[0];
-        s_name = params[1];
-        s_email = params[2];
-        s_username = params[3];
-        s_mode = params[4];
+        logged_in_id = params[0];
+        logged_in_name = params[1];
+        logged_in_email = params[2];
+        logged_in_username = params[3];
+        logged_in_type = params[4];
         initComponents();
     }
 
@@ -173,7 +173,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        View.main(new String[]{s_id, "type-u", s_mode});
+        View.main(new String[]{logged_in_id, "type-u", logged_in_type});
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -181,11 +181,11 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        Operation.main(new String[]{s_id, "", "type-u", "Delete"});
+        Operation.main(new String[]{logged_in_id, "", "type-u", "delete"});
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Profile.main(new String[]{s_id});
+        Profile.main(new String[]{logged_in_id});
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed

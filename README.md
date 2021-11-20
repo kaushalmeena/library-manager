@@ -10,7 +10,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 To install this project you need:
 
-- [Netbeans 11+](https://netbeans.apache.org/download/index.html "Netbeans 11+") (alongwith Java SE Development Kit 14)
+- [Netbeans 12](https://netbeans.apache.org/download/nb120/nb120.html "Netbeans 12")
+- [Java SE Development Kit 12](https://www.oracle.com/in/java/technologies/javase/jdk12-archive-downloads.html, "Java SE Development Kit 12")
 - [git](https://git-scm.com/downloads "git") (only to clone this repository)
 
 ### Installation

@@ -39,24 +39,24 @@ import javax.swing.UIManager;
  */
 public class Book extends javax.swing.JFrame {
 
-    String b_id;
+    String book_id;
     String action;
-    
+
     ResultSet r = null;
     PreparedStatement p = null;
     Connection c = null;
-    
+
     /**
      * Creates new form Book
      *
      * @param params the command line arguments
      */
     public Book(String params[]) {
-        b_id = params[0];
+        book_id = params[0];
         action = params[1];
         initComponents();
         if (action.equals("type-c")) {
-            jButton1.setText("Update");
+            jButton1.setText("update");
             initForm();
         }
     }
@@ -195,12 +195,12 @@ public class Book extends javax.swing.JFrame {
 
     private void initForm() {
         this.setTitle("Update book");
-        
+
         try {
             c = DriverManager.getConnection("jdbc:sqlite::resource:database/library.db");
 
             p = c.prepareStatement("select * from book where id = ?");
-            p.setString(1, b_id);
+            p.setString(1, book_id);
 
             r = p.executeQuery();
 
@@ -262,7 +262,7 @@ public class Book extends javax.swing.JFrame {
 
             if (action.equals("type-c")) {
                 p = c.prepareStatement("update book set name = ?, author = ?, publisher = ?, price = ?, quantity = ? where id = ?");
-                p.setString(6, b_id);
+                p.setString(6, book_id);
             }
             if (action.equals("type-a")) {
                 p = c.prepareStatement("insert into book (name, author, publisher, price, quantity) values (?, ?, ?, ?, ?)");
@@ -309,12 +309,12 @@ public class Book extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+
     /**
      * Checks validity of price
      *
      * @param price
-     * 
+     *
      * @return Boolean value showing if price is valid or not
      */
     public static boolean isPriceValid(String price) {
@@ -324,12 +324,12 @@ public class Book extends javax.swing.JFrame {
         }
         return pat.matcher(price).matches();
     }
-    
+
     /**
      * Checks validity of quantity
      *
      * @param quantity
-     * 
+     *
      * @return Boolean value showing if id is quantity or not
      */
     public static boolean isQuantityValid(String quantity) {
@@ -344,7 +344,7 @@ public class Book extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-       /* Set the Nimbus look and feel */
+        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 

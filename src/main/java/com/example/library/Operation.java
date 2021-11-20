@@ -39,7 +39,7 @@ import javax.swing.UIManager;
  */
 public class Operation extends javax.swing.JFrame {
 
-    String s_id;
+    String logged_in_id;
     String action;
     String operation;
 
@@ -55,7 +55,7 @@ public class Operation extends javax.swing.JFrame {
      * @param params the command line arguments
      */
     public Operation(String params[]) {
-        s_id = params[0];
+        logged_in_id = params[0];
         action = params[2];
         operation = params[3];
         initComponents();
@@ -152,28 +152,28 @@ public class Operation extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initForm() {
-        if (action.equals("type-b") && !(operation.equals("Issue") || operation.equals("Return"))) {
+        if (action.equals("type-b") && !(operation.equals("issue") || operation.equals("return"))) {
             jLabel1.setVisible(false);
             jTextField1.setVisible(false);
         }
-        if (action.equals("type-u") && !(operation.equals("Issue") || operation.equals("Return"))) {
+        if (action.equals("type-u") && !(operation.equals("issue") || operation.equals("return"))) {
             jLabel2.setVisible(false);
             jTextField2.setVisible(false);
         }
         jButton1.setText(operation);
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String u_id = jTextField1.getText();
-        String b_id = jTextField2.getText();
+        String user_id = jTextField1.getText();
+        String book_id = jTextField2.getText();
         ArrayList<String> messages = new ArrayList<>();
 
-        if (s_id.equals(u_id) && action.equals("type-u")) {
+        if (logged_in_id.equals(user_id) && action.equals("type-u")) {
             messages.add("Can't delete your own user account.");
         }
-        if (isIdValid(u_id) == false && jTextField1.isVisible()) {
+        if (isIdValid(user_id) == false && jTextField1.isVisible()) {
             messages.add("Specified user-id is not valid.");
         }
-        if (isIdValid(b_id) == false && jTextField2.isVisible()) {
+        if (isIdValid(book_id) == false && jTextField2.isVisible()) {
             messages.add("Specified book-id is not valid.");
         }
 
@@ -187,21 +187,21 @@ public class Operation extends javax.swing.JFrame {
 
             if (action.equals("type-u")) {
                 p = c.prepareStatement("select * from user where id = ?");
-                p.setString(1, u_id);
+                p.setString(1, user_id);
             }
             if (action.equals("type-b")) {
                 p = c.prepareStatement("select * from book where id = ?");
-                p.setString(1, b_id);
+                p.setString(1, book_id);
             }
 
             r = p.executeQuery();
 
             if (r.isBeforeFirst()) {
-                if (operation.equals("Update")) {
-                    Book.main(new String[]{b_id, "type-c"});
+                if (operation.equals("update")) {
+                    Book.main(new String[]{book_id, "type-c"});
                     this.dispose();
                 } else {
-                    if (operation.equals("Delete")) {
+                    if (operation.equals("delete")) {
                         if (action.equals("type-u")) {
                             messages.add("Do you really want to delete the user " + r.getString("name") + "?");
                         }
@@ -209,9 +209,9 @@ public class Operation extends javax.swing.JFrame {
                             messages.add("Do you really want to delete the book " + r.getString("name") + " by " + r.getString("author") + "?");
                         }
                     }
-                    if (operation.equals("Issue")) {
+                    if (operation.equals("issue")) {
                         q = c.prepareStatement("select count(*) as issued from issue where book_id = ?");
-                        q.setString(1, b_id);
+                        q.setString(1, book_id);
 
                         s = q.executeQuery();
 
@@ -222,19 +222,19 @@ public class Operation extends javax.swing.JFrame {
                             this.dispose();
                         }
                     }
-                    if (operation.equals("Return")) {
+                    if (operation.equals("return")) {
                         messages.add("Book " + r.getString("name") + " by " + r.getString("author") + " will be returned on behalf of specified user. Do you want to continue?");
                     }
 
                     if (JOptionPane.showConfirmDialog(null, String.join("\n", messages), "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                        if (operation.equals("Delete")) {
+                        if (operation.equals("delete")) {
                             if (action.equals("type-u")) {
                                 p = c.prepareStatement("delete from user where id = ?");
-                                p.setString(1, u_id);
+                                p.setString(1, user_id);
                             }
                             if (action.equals("type-b")) {
                                 p = c.prepareStatement("delete from book where id = ?");
-                                p.setString(1, b_id);
+                                p.setString(1, book_id);
                             }
 
                             if (p.executeUpdate() == 1) {
@@ -250,10 +250,10 @@ public class Operation extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, "Error occured while deleting data.", "Failure", JOptionPane.ERROR_MESSAGE);
                             }
                         }
-                        if (operation.equals("Issue")) {
+                        if (operation.equals("issue")) {
                             p = c.prepareStatement("insert into issue (book_id, user_id) values (?, ?)");
-                            p.setString(1, b_id);
-                            p.setString(2, u_id);
+                            p.setString(1, book_id);
+                            p.setString(2, user_id);
 
                             if (p.executeUpdate() == 1) {
                                 JOptionPane.showMessageDialog(null, "Book successfully issued.");
@@ -262,10 +262,10 @@ public class Operation extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, "Error occured while inserting data.", "Failure", JOptionPane.ERROR_MESSAGE);
                             }
                         }
-                        if (operation.equals("Return")) {
+                        if (operation.equals("return")) {
                             p = c.prepareStatement("delete from issue where book_id = ? and user_id = ?");
-                            p.setString(1, b_id);
-                            p.setString(2, u_id);
+                            p.setString(1, book_id);
+                            p.setString(2, user_id);
 
                             if (p.executeUpdate() == 1) {
                                 JOptionPane.showMessageDialog(null, "Book successfully returned.");
