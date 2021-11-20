@@ -56,23 +56,23 @@ public class Operation extends javax.swing.JFrame {
     public Operation(String params[]) {
         currentUserId = params[0];
         action = params[1];
+        initComponents();
+        initForm();
         switch (action) {
-            case "user-delete":
+            case "delete-user":
                 if (params.length > 2 && params[2].length() > 0) {
-                    jTextField1.setText(params[1]);
+                    jTextField1.setText(params[2]);
                 }
                 break;
-            case "book-issue":
-            case "book-return":
-            case "book-update":
-            case "book-delete":
+            case "issue-book":
+            case "return-book":
+            case "update-book":
+            case "delete-book":
                 if (params.length > 2 && params[2].length() > 0) {
-                    jTextField2.setText(params[1]);
+                    jTextField2.setText(params[2]);
                 }
                 break;
         }
-        initComponents();
-        initForm();
     }
 
     /**
@@ -164,23 +164,23 @@ public class Operation extends javax.swing.JFrame {
 
     private void initForm() {
         switch (action) {
-            case "user-delete":
+            case "delete-user":
                 jButton1.setText("Delete");
                 jLabel2.setVisible(false);
                 jTextField2.setVisible(false);
                 break;
-            case "book-issue":
+            case "issue-book":
                 jButton1.setText("Issue");
                 break;
-            case "book-return":
+            case "return-book":
                 jButton1.setText("Return");
                 break;
-            case "book-update":
+            case "update-book":
                 jButton1.setText("Update");
                 jLabel1.setVisible(false);
                 jTextField1.setVisible(false);
                 break;
-            case "book-delete":
+            case "delete-book":
                 jButton1.setText("Delete");
                 jLabel1.setVisible(false);
                 jTextField1.setVisible(false);
@@ -193,7 +193,7 @@ public class Operation extends javax.swing.JFrame {
         String book_id = jTextField2.getText();
         ArrayList<String> messages = new ArrayList<>();
 
-        if (currentUserId.equals(user_id) && action.equals("user-delete")) {
+        if (currentUserId.equals(user_id) && action.equals("delete-user")) {
             messages.add("Can't delete your own user account.");
         }
         if (isIdValid(user_id) == false && jTextField1.isVisible()) {
@@ -208,7 +208,7 @@ public class Operation extends javax.swing.JFrame {
             return;
         }
 
-        if (action.equals("book-update")) {
+        if (action.equals("update-book")) {
             Book.main(new String[]{"update-book", book_id});
             this.dispose();
             return;
@@ -218,13 +218,13 @@ public class Operation extends javax.swing.JFrame {
             c = DriverManager.getConnection("jdbc:sqlite::resource:database/library.db");
 
             switch (action) {
-                case "user-delete":
+                case "delete-user":
                     p = c.prepareStatement("select * from user where id = ?");
                     p.setString(1, user_id);
                     break;
-                case "book-issue":
-                case "book-return":
-                case "book-delete":
+                case "issue-book":
+                case "return-book":
+                case "delete-book":
                     p = c.prepareStatement("select * from book where id = ?");
                     p.setString(1, book_id);
                     break;
@@ -234,12 +234,12 @@ public class Operation extends javax.swing.JFrame {
 
             if (!r.isBeforeFirst()) {
                 switch (action) {
-                    case "user-delete":
+                    case "delete-user":
                         messages.add("Specified user-id was not found in database.");
                         break;
-                    case "book-issue":
-                    case "book-return":
-                    case "book-delete":
+                    case "issue-book":
+                    case "return-book":
+                    case "delete-book":
                         messages.add("Specified book-id was not found in database.");
                         break;
                 }
@@ -248,10 +248,10 @@ public class Operation extends javax.swing.JFrame {
             }
 
             switch (action) {
-                case "user-delete":
+                case "delete-user":
                     messages.add("Do you really want to delete the user " + r.getString("name") + "?");
                     break;
-                case "book-issue":
+                case "issue-book":
                     q = c.prepareStatement("select count(*) as issued from issue where book_id = ?");
                     q.setString(1, book_id);
 
@@ -264,7 +264,7 @@ public class Operation extends javax.swing.JFrame {
                         return;
                     }
                     break;
-                case "book-return":
+                case "return-book":
                     q = c.prepareStatement("select * from issue where book_id = ? and user_id = ?");
                     q.setString(1, book_id);
                     q.setString(2, user_id);
@@ -277,7 +277,7 @@ public class Operation extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Specified book can't be returned and it is not issued yet.");
                         return;
                     }
-                case "book-delete":
+                case "delete-book":
                     messages.add("Do you really want to delete the book " + r.getString("name") + " by " + r.getString("author") + "?");
                     break;
             }
@@ -287,7 +287,7 @@ public class Operation extends javax.swing.JFrame {
             }
 
             switch (action) {
-                case "user-delete":
+                case "delete-user":
                     p = c.prepareStatement("delete from user where id = ?");
                     p.setString(1, user_id);
 
@@ -298,7 +298,7 @@ public class Operation extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Error occured while deleting user.", "Failure", JOptionPane.ERROR_MESSAGE);
                     }
                     break;
-                case "book-issue":
+                case "issue-book":
                     p = c.prepareStatement("insert into issue (book_id, user_id) values (?, ?)");
                     p.setString(1, book_id);
                     p.setString(2, user_id);
@@ -310,7 +310,7 @@ public class Operation extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Error occured while issuing book.", "Failure", JOptionPane.ERROR_MESSAGE);
                     }
                     break;
-                case "book-return":
+                case "return-book":
                     p = c.prepareStatement("delete from issue where book_id = ? and user_id = ?");
                     p.setString(1, book_id);
                     p.setString(2, user_id);
@@ -322,7 +322,7 @@ public class Operation extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Error occured while returning book.", "Failure", JOptionPane.ERROR_MESSAGE);
                     }
                     break;
-                case "book-delete":
+                case "delete-book":
                     p = c.prepareStatement("delete from book where id = ?");
                     p.setString(1, book_id);
 

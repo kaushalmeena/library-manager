@@ -53,12 +53,8 @@ public class Book extends javax.swing.JFrame {
      */
     public Book(String params[]) {
         action = params[0];
-        switch (action) {
-            case "update-book":
-                if (params.length > 1 && params[1].length() > 0) {
-                    book_id = params[1];
-                }
-                break;
+        if (params.length > 1 && params[1].length() > 0) {
+            book_id = params[1];
         }
         initComponents();
         initForm();
