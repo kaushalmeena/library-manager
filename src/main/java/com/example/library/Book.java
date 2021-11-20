@@ -68,14 +68,14 @@ public class Book extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -84,10 +84,10 @@ public class Book extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Book");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Name");
+
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Author");
@@ -99,10 +99,10 @@ public class Book extends javax.swing.JFrame {
 
         jTextField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jTextField4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Price");
+
+        jTextField4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Quantity");
@@ -192,56 +192,6 @@ public class Book extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void initForm() {
-        switch (action) {
-            case "create-book":
-                jButton1.setText("Create");
-                this.setTitle("Create book");
-                break;
-            case "update-book":
-                jButton1.setText("Update");
-                this.setTitle("Update book");
-
-                try {
-                    c = DriverManager.getConnection("jdbc:sqlite::resource:database/library.db");
-
-                    p = c.prepareStatement("select * from book where id = ?");
-                    p.setString(1, book_id);
-
-                    r = p.executeQuery();
-
-                    if (!r.isBeforeFirst()) {
-                        JOptionPane.showMessageDialog(null, "Specified book was not found in database.", "Failure", JOptionPane.ERROR_MESSAGE);
-                        this.dispose();
-                        return;
-                    }
-
-                    jTextField1.setText(r.getString("name"));
-                    jTextField2.setText(r.getString("author"));
-                    jTextField3.setText(r.getString("publisher"));
-                    jTextField4.setText(r.getString("price"));
-                    jTextField5.setText(r.getString("quantity"));
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
-                } finally {
-                    try {
-                        if (r != null) {
-                            r.close();
-                        }
-                        if (p != null) {
-                            p.close();
-                        }
-                        if (c != null) {
-                            c.close();
-                        }
-                    } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-                break;
-        }
-    }
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String name = jTextField1.getText();
         String author = jTextField2.getText();
@@ -328,6 +278,56 @@ public class Book extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void initForm() {
+        switch (action) {
+            case "create-book":
+                jButton1.setText("Create");
+                this.setTitle("Create book");
+                break;
+            case "update-book":
+                jButton1.setText("Update");
+                this.setTitle("Update book");
+
+                try {
+                    c = DriverManager.getConnection("jdbc:sqlite::resource:database/library.db");
+
+                    p = c.prepareStatement("select * from book where id = ?");
+                    p.setString(1, book_id);
+
+                    r = p.executeQuery();
+
+                    if (!r.isBeforeFirst()) {
+                        JOptionPane.showMessageDialog(null, "Specified book was not found in database.", "Failure", JOptionPane.ERROR_MESSAGE);
+                        this.dispose();
+                        return;
+                    }
+
+                    jTextField1.setText(r.getString("name"));
+                    jTextField2.setText(r.getString("author"));
+                    jTextField3.setText(r.getString("publisher"));
+                    jTextField4.setText(r.getString("price"));
+                    jTextField5.setText(r.getString("quantity"));
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    try {
+                        if (r != null) {
+                            r.close();
+                        }
+                        if (p != null) {
+                            p.close();
+                        }
+                        if (c != null) {
+                            c.close();
+                        }
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                break;
+        }
+    }
 
     /**
      * Checks validity of price
