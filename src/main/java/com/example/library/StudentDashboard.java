@@ -65,7 +65,7 @@ public class StudentDashboard extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("StudentDashboard");
+        setTitle("Dashboard");
         setSize(new java.awt.Dimension(500, 230));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N

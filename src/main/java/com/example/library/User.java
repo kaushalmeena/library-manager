@@ -357,6 +357,7 @@ public class User extends javax.swing.JFrame {
                 jButton3.setVisible(false);
                 break;
             case "register-user":
+                this.setTitle("Register");
                 jButton1.setText("Register");
                 jLabel4.setVisible(false);
                 jComboBox1.setVisible(false);

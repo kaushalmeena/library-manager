@@ -282,12 +282,12 @@ public class Book extends javax.swing.JFrame {
     private void initForm() {
         switch (action) {
             case "create-book":
-                jButton1.setText("Create");
                 this.setTitle("Create book");
+                jButton1.setText("Create");
                 break;
             case "update-book":
-                jButton1.setText("Update");
                 this.setTitle("Update book");
+                jButton1.setText("Update");
 
                 try {
                     c = DriverManager.getConnection("jdbc:sqlite::resource:database/library.db");
