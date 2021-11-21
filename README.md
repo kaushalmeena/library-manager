@@ -39,13 +39,13 @@ $ git clone https://github.com/kaushalmeena/library-manager.git
 
 <img src="./screenshots/AdminDashboard.png" width="600">
 <img src="./screenshots/AdminUsers.png" width="600"> 
-<img src="./screenshots/AdminAddUser.png" width="600">
+<img src="./screenshots/AdminCreateUser.png" width="600">
 
 ### Librarian Module
 
 <img src="./screenshots/LibrarianDashboard.png" width="600">
 <img src="./screenshots/LibrarianBooks.png" width="600"> 
-<img src="./screenshots/LibrarianAddBook.png" width="600">
+<img src="./screenshots/LibrarianCreateBook.png" width="600">
 <img src="./screenshots/LibrarianUpdateBook.png" width="600"> 
 <img src="./screenshots/LibrarianIssuedBooks.png" width="600">
 

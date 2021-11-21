@@ -339,10 +339,10 @@ public class View extends javax.swing.JFrame {
                     p = c.prepareStatement("select * from book");
                     break;
                 case "view-issued-books":
-                    p = c.prepareStatement("select issue.id, book.id as book_id, user.id as user_id, book.name as book_name, book.author as book_author, user.name, user.email, issue.issue_date from issue join user on user.id = issue.user_id join book on book.id = issue.user_id");
+                    p = c.prepareStatement("select issue.id as issue_id, book.id as book_id, user.id as user_id, book.name as book_name, book.author as book_author, user.name, user.email, issue.issue_date from issue join user on user.id = issue.user_id join book on book.id = issue.book_id");
                     break;
                 case "view-user-issued-books":
-                    p = c.prepareStatement("select issue.id, book.id as book_id, user.id as user_id, book.name as book_name, book.author as book_author, user.name, user.email, issue.issue_date from issue join user on user.id = issue.user_id join book on book.id = issue.user_id where issue.user_id = ?");
+                    p = c.prepareStatement("select issue.id as issue_id, book.id as book_id, user.id as user_id, book.name as book_name, book.author as book_author, user.name, user.email, issue.issue_date from issue join user on user.id = issue.user_id join book on book.id = issue.book_id where issue.user_id = ?");
                     p.setString(1, currentUserId);
                     break;
                 case "view-users":

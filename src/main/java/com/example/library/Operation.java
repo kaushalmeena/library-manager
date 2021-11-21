@@ -256,7 +256,7 @@ public class Operation extends javax.swing.JFrame {
                     break;
             }
 
-            if (JOptionPane.showConfirmDialog(null, String.join("\n", messages), "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+            if (JOptionPane.showConfirmDialog(null, String.join("\n", messages), "Warning", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                 return;
             }
 
@@ -340,22 +340,27 @@ public class Operation extends javax.swing.JFrame {
     private void initForm() {
         switch (action) {
             case "delete-user":
+                this.setTitle("Delete operation");
                 jButton1.setText("Delete");
                 jLabel2.setVisible(false);
                 jTextField2.setVisible(false);
                 break;
             case "issue-book":
+                this.setTitle("Issue operation");
                 jButton1.setText("Issue");
                 break;
             case "return-book":
+                this.setTitle("Return operation");
                 jButton1.setText("Return");
                 break;
             case "update-book":
+                this.setTitle("Update operation");
                 jButton1.setText("Update");
                 jLabel1.setVisible(false);
                 jTextField1.setVisible(false);
                 break;
             case "delete-book":
+                this.setTitle("Delete operation");
                 jButton1.setText("Delete");
                 jLabel1.setVisible(false);
                 jTextField1.setVisible(false);
