@@ -21,7 +21,7 @@ To set up everything in your local machine, you need to follow these steps:
 1. Clone this repo onto your computer:
 
 ```bash
-$ git clone https://github.com/kaushalmeena/library-manager.git
+git clone https://github.com/kaushalmeena/library-manager.git
 ```
 
 2. Open Netbeans and click on File->Open project
