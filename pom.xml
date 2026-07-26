@@ -22,6 +22,7 @@
 
         <flatlaf.version>3.7.2</flatlaf.version>
         <gson.version>2.14.0</gson.version>
+        <jsvg.version>2.1.0</jsvg.version>
         <jbcrypt.version>0.4</jbcrypt.version>
         <sqlite.version>3.49.1.0</sqlite.version>
         <junit.version>5.14.4</junit.version>
@@ -61,6 +62,13 @@
             <version>${gson.version}</version>
         </dependency>
 
+        <!-- Renders the SVG logo into the window and dock icons -->
+        <dependency>
+            <groupId>com.github.weisj</groupId>
+            <artifactId>jsvg</artifactId>
+            <version>${jsvg.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -71,6 +79,22 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <!-- The logo is authored in assets/ for the README and shipped as a resource so
+                 AppIcon renders the same file, rather than a hand-copied duplicate. -->
+            <resource>
+                <directory>assets</directory>
+                <targetPath>icons</targetPath>
+                <includes>
+                    <include>logo.svg</include>
+                </includes>
+            </resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

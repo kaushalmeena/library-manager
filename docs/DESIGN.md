@@ -74,9 +74,13 @@ up across unrelated screens.
 The icon set is drawn with Java2D in `ui/theme/VectorIcon.java` rather than
 shipped as image files. Each glyph is described on a 24×24 grid and scaled to the
 requested size, so icons stay sharp on any display and take the current theme
-colour without needing light and dark copies of every asset. The application and
-dock icon in `ui/theme/AppIcon.java` paints the same mark as
-[`assets/logo.svg`](../assets/logo.svg).
+colour without needing light and dark copies of every asset.
+
+The application icon is the exception, because it has to exist outside the
+running interface. It is authored once as [`assets/logo.svg`](../assets/logo.svg)
+— the same file the README displays — and `ui/theme/AppIcon.java` rasterises that
+file at the sizes the platform asks for, rather than redrawing the mark in code
+where the two copies would drift apart.
 
 ## Layout
 

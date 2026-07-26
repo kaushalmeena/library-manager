@@ -3,6 +3,7 @@ package com.example.library;
 import com.example.library.config.AppConfig;
 import com.example.library.db.DataAccessException;
 import com.example.library.ui.LoginFrame;
+import com.example.library.ui.theme.AppIcon;
 import com.example.library.ui.theme.Theme;
 
 import javax.swing.JOptionPane;
@@ -45,6 +46,7 @@ public final class LibraryApp {
 
         SwingUtilities.invokeLater(() -> {
             Theme.install();
+            AppIcon.applyToTaskbar();
             LoginFrame login = new LoginFrame(services);
             if (firstRun) {
                 // A fresh database only holds demo accounts, so point the reader at one.
