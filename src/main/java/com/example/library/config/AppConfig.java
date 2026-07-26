@@ -48,12 +48,12 @@ public final class AppConfig {
                 intProperty(GRACE_DAYS_PROPERTY, 0),
                 intProperty(MAX_LOANS_PROPERTY, 5),
                 intProperty(MAX_RENEWALS_PROPERTY, 2),
-                System.getProperty("library.currency", "₹"));
+                System.getProperty("library.currency", "$"));
     }
 
     /** Configuration for tests and tooling that need an explicit data directory. */
     public static AppConfig forDataDirectory(Path dataDirectory) {
-        return new AppConfig(dataDirectory, 14, new BigDecimal("2.00"), 0, 5, 2, "₹");
+        return new AppConfig(dataDirectory, 14, new BigDecimal("2.00"), 0, 5, 2, "$");
     }
 
     private static int intProperty(String key, int fallback) {
@@ -117,7 +117,7 @@ public final class AppConfig {
         return currencySymbol;
     }
 
-    /** Formats an amount for display, e.g. {@code ₹12.00}. */
+    /** Formats an amount for display, e.g. {@code $12.00}. */
     public String money(BigDecimal amount) {
         BigDecimal value = amount == null ? BigDecimal.ZERO : amount;
         return currencySymbol + value.setScale(2, java.math.RoundingMode.HALF_UP).toPlainString();

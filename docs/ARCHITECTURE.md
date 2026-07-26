@@ -168,7 +168,7 @@ changed without a rebuild:
 | `library.graceDays`           | `0`                  | Late days forgiven               |
 | `library.maxLoansPerMember`   | `5`                  | Concurrent loans per member       |
 | `library.maxRenewals`         | `2`                  | Renewals allowed per loan        |
-| `library.currency`            | `₹`                  | Symbol used when showing money   |
+| `library.currency`            | `$`                  | Symbol used when showing money   |
 
 ## Testing
 
