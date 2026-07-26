@@ -36,7 +36,7 @@ all stored in a local SQLite file with no server to set up.
   </tr>
   <tr>
     <td width="50%"><img src="screenshots/Members.png" alt="Member management with holdings, overdue counts and fines owed"></td>
-    <td width="50%"><img src="screenshots/DashboardDark.png" alt="The librarian dashboard in dark mode"></td>
+    <td width="50%"><img src="screenshots/Profile.png" alt="Profile screen with account details, borrowing summary and library policy"></td>
   </tr>
   <tr>
     <td width="50%"><img src="screenshots/StudentDashboard.png" alt="Student dashboard showing their own loans and due dates"></td>
