@@ -143,6 +143,11 @@ public final class ProfileView extends View {
         identityText.add(roleBadge);
         identity.add(icon, BorderLayout.WEST);
         identity.add(identityText, BorderLayout.CENTER);
+        // Without a height cap the surrounding BoxLayout stretches this block and it swallows all
+        // the spare space in the card, pushing the rows down and mis-centring the icon.
+        identity.setAlignmentX(LEFT_ALIGNMENT);
+        identity.setMaximumSize(
+                new Dimension(Integer.MAX_VALUE, identity.getPreferredSize().height));
 
         JPanel summary = new JPanel();
         summary.setOpaque(false);
@@ -153,6 +158,8 @@ public final class ProfileView extends View {
         summary.add(summaryRow("Borrowed all time", historyLabel));
         summary.add(summaryRow("Fines owed", finesLabel));
         summary.add(summaryRow("Member since", memberSinceLabel));
+        // Anything left over collects at the bottom instead of being shared between the rows.
+        summary.add(Box.createVerticalGlue());
 
         Card summaryCard = Card.titled("At a glance", summary);
 
@@ -167,6 +174,7 @@ public final class ProfileView extends View {
                 services.config().maxRenewals() + " per loan"));
         policyText.add(policyRow("Late fine",
                 services.config().money(services.config().finePerDay()) + " per day"));
+        policyText.add(Box.createVerticalGlue());
         Card policyCard = Card.titled("Library policy", policyText);
 
         summaryCard.setAlignmentX(LEFT_ALIGNMENT);
