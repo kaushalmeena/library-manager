@@ -72,8 +72,7 @@ public final class RegisterDialog extends JDialog {
                 .add("Full name", nameField, null, 2)
                 .add("Email", emailField)
                 .add("Mobile", mobileField, "Optional")
-                .add("Username", usernameField, "3-20 characters")
-                .newRow()
+                .add("Username", usernameField, "3-20 characters", 2)
                 .add("Password", passwordField, "At least 8 characters, with a letter and a digit")
                 .add("Confirm password", confirmField)
                 .build();
