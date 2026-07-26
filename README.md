@@ -4,7 +4,7 @@
 
 # Library Manager
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-3DA639?logo=opensourceinitiative&logoColor=white)](LICENSE) (https://github.com/kaushalmeena/library-manager/actions) [![Java](https://img.shields.io/badge/Java-17-4C6EF5?logo=openjdk&logoColor=white)](https://openjdk.org/) [![SQLite](https://img.shields.io/badge/SQLite-3-0B7285?logo=sqlite&logoColor=white)](https://www.sqlite.org/) [![Maven](https://img.shields.io/badge/Maven-3.9-C2255C?logo=apachemaven&logoColor=white)](https://maven.apache.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-3DA639?logo=opensourceinitiative&logoColor=white)](LICENSE) [![CI](https://img.shields.io/github/actions/workflow/status/kaushalmeena/library-manager/build.yml?logo=githubactions&logoColor=white&label=CI)](https://github.com/kaushalmeena/library-manager/actions) [![Java](https://img.shields.io/badge/Java-17-4C6EF5?logo=openjdk&logoColor=white)](https://openjdk.org/) [![SQLite](https://img.shields.io/badge/SQLite-3-0B7285?logo=sqlite&logoColor=white)](https://www.sqlite.org/) [![Maven](https://img.shields.io/badge/Maven-3.9-C2255C?logo=apachemaven&logoColor=white)](https://maven.apache.org/)
 
 **A desktop library system that tracks due dates, fines and every loan ever made.**
 
