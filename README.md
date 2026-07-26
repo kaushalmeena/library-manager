@@ -44,7 +44,7 @@ all stored in a local SQLite file with no server to set up.
   </tr>
   <tr>
     <td width="50%"><img src="screenshots/Login.png" alt="Sign-in screen"></td>
-    <td width="50%"></td>
+    <td width="50%"><img src="screenshots/Register.png" alt="Self-service registration form"></td>
   </tr>
 </table>
 
