@@ -2,13 +2,13 @@
 
 # Library Manager
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-3DA639?logo=opensourceinitiative&logoColor=white)](LICENSE) [![Java](https://img.shields.io/badge/Java-JDK_12-ED8B00?logo=openjdk&logoColor=white)](https://www.oracle.com/java/) [![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/) [![NetBeans](https://img.shields.io/badge/NetBeans-12-1B6AC9?logo=apache&logoColor=white)](https://netbeans.apache.org/)
+
 **A Java desktop application for managing a library with role-based access.**
 
 A NetBeans project for library management that stores data in an **SQLite**
 database, with separate modules for authentication, admin, librarian, and
 student workflows.
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-3DA639?logo=opensourceinitiative&logoColor=white)](LICENSE) [![Java](https://img.shields.io/badge/Java-JDK_12-ED8B00?logo=openjdk&logoColor=white)](https://www.oracle.com/java/) [![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/) [![NetBeans](https://img.shields.io/badge/NetBeans-12-1B6AC9?logo=apache&logoColor=white)](https://netbeans.apache.org/)
 
 </div>
 
