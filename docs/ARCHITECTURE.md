@@ -187,8 +187,8 @@ throw-away database and a movable clock.
 | `CsvExporterTest`          | RFC 4180 quoting and escaping                               |
 | `DatabaseTest`             | Migration, seeding, foreign keys, cascades, transactions      |
 
-No test touches the network or requires a display, so the suite runs offline and
-in CI unchanged.
+No test touches the network or requires a display, so the suite runs offline on
+any machine with a JDK.
 
 ## Build
 
@@ -198,10 +198,6 @@ Maven, with the wrapper committed so a contributor needs only a JDK.
 - `./mvnw exec:java` — run from source
 - `./mvnw package` — build `target/library-manager.jar`, a self-contained jar
   produced by the Shade plugin
-
-[GitHub Actions](../.github/workflows/build.yml) runs the same `verify` on
-Java 17 and 21 for every push and pull request, and publishes the jar as a build
-artifact.
 
 ## Decisions and trade-offs
 

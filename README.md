@@ -100,7 +100,7 @@ all stored in a local SQLite file with no server to set up.
 | **Security**  | [jBCrypt](https://github.com/jeremyh/jBCrypt) (password hashing)                                          |
 | **Data**      | [Open Library API](https://openlibrary.org/dev/docs/api/books) · [Gson](https://github.com/google/gson)    |
 | **Testing**   | [JUnit 5](https://junit.org/junit5/) (119 tests over an in-memory database)                                |
-| **Build**     | [Maven](https://maven.apache.org/) (wrapper committed) · [GitHub Actions](.github/workflows/build.yml)     |
+| **Build**     | [Maven](https://maven.apache.org/) (wrapper committed)                                                     |
 
 ## Getting Started
 
