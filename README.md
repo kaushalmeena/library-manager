@@ -200,6 +200,21 @@ java -jar target/library-manager.jar
 - [FlatLaf](https://www.formdev.com/flatlaf/) by **FormDev Software**, licensed
   under [Apache 2.0](https://github.com/JFormDesigner/FlatLaf/blob/main/LICENSE).
 
+## Documentation
+
+- **[architecture.md](docs/architecture.md)** — how Library Manager is put
+  together and why: the layers, the storage model, and the invariants the code
+  relies on.
+- **[design.md](docs/design.md)** — the interface conventions the app follows,
+  and the reasoning behind them.
+
+## Contributing
+
+Contributions are welcome! If you find a bug or have a feature request, please
+[open an issue](https://github.com/kaushalmeena/library-manager/issues/new/choose)
+first to discuss it. For code changes, fork the repository, create a branch,
+and open a pull request.
+
 ## License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE)
