@@ -1,7 +1,7 @@
 # Design
 
 The interface conventions Library Manager follows, and the reasoning behind them.
-For how the code is structured see [ARCHITECTURE.md](ARCHITECTURE.md).
+For how the code is structured see [architecture.md](architecture.md).
 
 ## Principles
 

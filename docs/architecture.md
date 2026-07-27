@@ -1,7 +1,7 @@
 # Architecture
 
 How Library Manager is put together, and why. For interface conventions see
-[DESIGN.md](DESIGN.md).
+[design.md](design.md).
 
 ## Goals
 
