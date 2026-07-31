@@ -202,11 +202,24 @@ java -jar target/library-manager.jar
 
 ## Documentation
 
-- **[architecture.md](docs/architecture.md)** — how Library Manager is put
-  together and why: the layers, the storage model, and the invariants the code
-  relies on.
-- **[design.md](docs/design.md)** — the interface conventions the app follows,
-  and the reasoning behind them.
+Full documentation is available in the [`/docs`](./docs) directory.
+
+**Core Concepts:**
+
+- [Goals and Layers](./docs/overview.md) — what the project is trying to be, and the layer boundaries that keep it that way.
+- [Data Model and Configuration](./docs/data-model.md) — the tables, how availability is derived rather than stored, and what is tunable without a rebuild.
+
+**Design System:**
+
+- [Foundations](./docs/foundations.md) — the principles, and the visual language they produce.
+- [Layout and Components](./docs/layout.md) — how screens are arranged, and the components that fill them.
+- [Forms and Dialogs](./docs/forms.md) — how input is gathered, validated and confirmed.
+- [Dark Mode and Accessibility](./docs/accessibility.md) — the second theme, and the rules that keep it usable by keyboard and screen reader.
+
+**Development:**
+
+- [Testing and Build](./docs/testing.md) — how the suite runs against a throw-away database, and how the project is packaged.
+- [Decisions and Trade-offs](./docs/decisions.md) — the choices a reasonable person would have made differently, and why.
 
 ## Contributing
 
