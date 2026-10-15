@@ -1,7 +1,5 @@
 # Decisions and trade-offs
 
-## Decisions and trade-offs
-
 **One shared connection instead of a pool.** A desktop application has one user.
 A pool would add configuration and lifecycle for no benefit; `synchronized`
 methods are enough, and SQLite serialises writes regardless.
